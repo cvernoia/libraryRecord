@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <title>Browse Spells</title>
+
+    <link rel="stylesheet" href="/client/css/libraries.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="./js/read-records.js"></script>
+</head>
+
+<nav class="center">
+
+    <a href="/client/" >Home Page </a>
+    <a href="/client/browse-library.html" >Browse Library</a>
+    <a href="/client/write-library.html">Add book entry</a>
+    <a href="/client/read-records.html">Read records</a>
+
+</nav>
+
+<body data-ng-app="readRecordsApp" data-ng-controller="readRecordsCntrl">
+
+    
+    <div= style="font-size: 30px;">
+
+        <div>
+            <label for="bookTitle" style="color: darkmagenta">Book Title: </label>
+            <label style="margin-left: 30px; color: whitesmoke" id="name">{{obj.bookTitle}}</label>
+        </div>
+
+        
+        <div>
+            <label for="author" style="color:darkmagenta" >Author:  </label>
+            <label style="margin-left: 30px; color: whitesmoke" id="type">{{obj.author}}</label>
+        </div>
+
+        
+        <div>
+            <label for="publisher" style="color:darkmagenta">Publisher: </label>
+            <label style="margin-left: 30px; color: whitesmoke" id="publisher">{{obj.publisher}}</label>
+        </div>
+
+        <div>
+            <label for="yearPublished" style="color:darkmagenta">Year Published: </label>
+            <label style="margin-left: 30px; color: whitesmoke" id="yearPublished">{{ obj['yearPublished'] }}</label>
+        </div>
+        
+        <div>
+            <label for="isbn" style="color:darkmagenta">ISBN: </label>
+            <label style="margin-left: 30px; color: whitesmoke" id="isbn">{{ obj['isbn'] }}</label>
+        </div>
+
+        <div style="float: left; margin-top: 30px">
+        <div style ="float: left">
+        <button id="previous" data-ng-click="changeRecords(-1)" data-ng-hide="hidePrev">
+           Previous  &lt&lt&lt 
+        </button>
+    </div> 
+    <div style ="float: left;">
+            <button id="next" data-ng-click="changeRecords(1)" data-ng-hide="hideNext">
+                 Next  &gt&gt&gt
+            </button>
+
+        
+        </div>
+        
+        
+    </div>
+
+</body>
+
+</html>

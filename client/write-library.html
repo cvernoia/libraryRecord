@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="css/libraries.css">
+    <title>Write Library</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="/client/js/config.js"></script>
+    <script src="/client/js/write-library.js"></script>
+ 
+</head>   
+
+<body data-ng-app="addLibraryApp" data-ng-controller="addLibraryCtrl">
+<header>
+    <h1>Enter Book Data Into Library</h1>
+</header>
+
+<div id="router_button">
+   
+
+    <a href="/client/" >Home Page </a>
+    <a href="/client/browse-library.html" >Browse Library</a>
+    <a href="/client/read-records.html">Read records</a>
+    
+
+</div>
+
+<main>
+    <section>
+        <form>
+            <div>
+                <label for= "bookTitle">
+                    Book Title
+                </label>
+                <input type = "text" data-ng-model="bookTitle" id= "bookTitle" name="bookTitle" size=30>
+            </div>
+            <div>
+                <label for= "author">
+                   Author
+                </label>
+                <input type = "text" data-ng-model="author" id= "author" name="author" size=30>
+            </div>
+             <div>
+                <label for= "Publisher">
+                   Publisher
+                </label>
+                <input type = "text" data-ng-model="publisher" id= "publisher" name="publisher" size=30>
+            </div>
+            <div>
+                <label for= "yearPublished">
+                    Year Published
+                </label>
+                <input type = "text" data-ng-model="yearPublished" id= "yearPublished" name="yearPublished" size=30>
+            </div>
+            <div>
+                <label for= "isbn">
+                   ISBN
+                </label>
+                <input type = "text"  data-ng-model="isbn" id= "isbn" name="isbn" size=30>
+            </div>
+            <div>
+                <button id="data-submit" data-ng-click="dataSubmit()">Submit</button>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+
+</html>
