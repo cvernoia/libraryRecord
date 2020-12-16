@@ -1,54 +1,75 @@
-retrieveData();
+let records = [];
 
-function retrieveData(){
-        $.ajax({
-                url: libraryURL +  "/read-records",
-                type: "get",
-                success: function(response){
-           //     var data = jQuery.parseJSON(response);
-                console.log("I'm here");
-                createLibraryTable(response);
-            }
+let app = angular.module("browseRecordsApp", []);
+
+app.controller("browseRecordsController", function ($scope, $http) {
+    $scope.records = []
+    $scope.editId = null
+    $scope.newBookTitle = ''
+    $scope.newAuthor = ''
+    $scope.newPublisher = ''
+    $scope.newYearPublished = ''
+    $scope.newIsbn = ''
+    
+    $scope.read_records = function() {
+        $http({
+            method: "get",
+            url: libraryURL +  "/read-records"
+        }).then(function (res) {
+            records = res.data;
+            $scope.records = records;
         });
-}
-
-function createLibraryTable(libraryData){
-var tableHTML = " ";
-
-for(var i=0; i<libraryData.length; i++){
-    tableHTML += "<tr>";
-        tableHTML += "<td>" + libraryData[i]._id + "</td>";
-        tableHTML += "<td>" + libraryData[i].bookTitle + "</td>";
-        tableHTML += "<td>" + libraryData[i].author + "</td>";
-        tableHTML += "<td>" + libraryData[i].publisher + "</td>";
-        tableHTML += "<td>" + libraryData[i].yearPublished + "</td>";
-        tableHTML += "<td>" + libraryData[i].isbn + "</td>";
-        tableHTML += "<td>" + "<button class='delete_button' data-id='" + libraryData[i]._id + "'>delete pls :)</button>" + "</td>";
-        tableHTML += "</tr>"
-}
-$('#libraryTable').html(tableHTML);
-activateDelete();
-}
-
-function activateDelete() {
-    $('.delete_button').click(function() {
-        var deleteID = this.getAttribute("data-id");
+    }
+    
+    $scope.delete_record = function(deleteID) {     
+        $http({
+            method: "delete",
+            url: libraryURL +  "/delete-record",
+            data: {"deleteID": deleteID}
+        }).then(function (res) {
+            $scope.read_records(); 
+        })
+    }
+    
+    $scope.getByAuthor = function() {
+        $http({
+            method: "get",
+            url: libraryURL +  "/type-records",
+            params: {"author": $scope.author}
+        }).then(function(res) {
+            $scope.records = res.data;
+        })
+    }
+    
+    $scope.update_record = function () {
         
-        $.ajax({
-        url: libraryURL + "/delete-record",
-        type:"delete",
-        data: {deleteID: deleteID},
-        success: function(response){
-            if(response = "SUCCESS") {
-                retrieveData();  
-            } else {
-                alert(response);
+        $http({
+            method: "put",
+            url: libraryURL +  "/update-record",
+            data: {
+                deleteID: $scope.editId,
+                bookTitle: $scope.newBookTitle,
+                author: $scope.newAuthor,
+                publisher: $scope.newPublisher,
+                yearPublished: $scope.newYearPublished,
+                isbn: $scope.newIsbn
             }
-        },
-        error: function(err){
-            alert(err);
-        }
-        });
-
-    });
-}
+        }).then(function(res) {
+            $scope.read_records(); 
+        })
+        
+        $scope.editId = null;
+    }
+    
+    $scope.toggle_edit = function (record) {
+        $scope.editId = record._id
+        $scope.newBookTitle = record.bookTitle
+        $scope.newAuthor = record.author
+        $scope.newPublisher = record.publisher
+        $scope.newYearPublished = record.yearPublished
+        $scope.newIsbn = record.isbn
+    }
+    $scope.read_records();
+    
+    $scope.read_records();
+});

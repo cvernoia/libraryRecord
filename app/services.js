@@ -5,7 +5,6 @@ const dbURL = process.env.DB_URI || "mongodb://localhost";
 
 var services = function (app) {
     app.post('/write-library', function (req, res) {
-        console.log("here");
         var bookData= {
             bookTitle: req.body.bookTitle,
             author: req.body.author,
@@ -56,8 +55,33 @@ var services = function (app) {
         
    });
    
+    app.get('/type-records', function (req, res) {
+        console.log(req.query.author)
+        
+        MongoClient.connect(dbURL, {useUnifiedTopology: true}, function(err, client) { 
+           if(err) {
+                return res.status(200).send(JSON.stringify({msg: "Error: " + err}));
+            }else{
+                var dbo = client.db("library");
+
+                dbo.collection("books").find({author: req.query.author}).toArray(function (err, docs) {
+                    if(err) {
+                        client.close();
+                        return res.status(200).send(JSON.stringify({msg: "Error: " + err}));
+                    }else{
+                        console.log(docs);
+                        client.close();
+                        return res.status(200).send(docs);
+                    }
+                });
+            } 
+        });
+    
+    });
+   
     app.delete('/delete-record', function(req, res) {
        var deleteID = req.body.deleteID;
+       console.log(req.body)
        
        MongoClient.connect(dbURL, {useUnifiedTopology: true}, function(err, client) { 
            if(err) {
@@ -79,6 +103,36 @@ var services = function (app) {
                     }
                 });
             } 
+        });
+    });
+    
+    app.put('/update-record', function (req, res) {
+        var deleteID = req.body.deleteID;
+        let updateParams = {};
+        if (req.body.bookTitle) updateParams.bookTitle = req.body.bookTitle;
+        if (req.body.author) updateParams.author = req.body.author;
+        if (req.body.publisher) updateParams.publisher = req.body.publisher;
+        if (req.body.yearPublished) updateParams.yearPublished = req.body.yearPublished;
+        if (req.body.isbn) updateParams.isbn = req.body.isbn;
+
+
+        console.log(req.body)
+        MongoClient.connect(dbURL, {useUnifiedTopology: true}, function(err, client) {
+            if(err) {
+                return res.status(200).send(JSON.stringify({msg: "Error: " + err}));
+            }else{
+                var dbo = client.db("library");
+
+                dbo.collection("books").updateOne({_id: ObjectId(deleteID)}, { $set: updateParams }, function (err) {
+                    if(err) {
+                        client.close();
+                        return res.status(200).send(JSON.stringify({msg: "Error: " + err}));
+                    }else{
+                        client.close();
+                        return res.status(200).send(JSON.stringify({msg: "SUCCESS"}));
+                    }
+                });
+            }
         });
     });
 }

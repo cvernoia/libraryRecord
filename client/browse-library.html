@@ -3,13 +3,15 @@
 
 <head>
     <link rel="stylesheet" href="css/libraries.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="/client/js/config.js"></script>
-<script src="/client/js/browse-library.js" async></script>
+    <script src="/client/js/config.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="/client/js/browse-library.js"></script>
+    
+    
     <title>Browse Library</title>
 </head>
 
-<body>
+<body data-ng-app="browseRecordsApp" data-ng-controller="browseRecordsController">
     <header>
         <h1>Library of Books</h1>
     </header>
@@ -24,8 +26,14 @@
 
 
     </div>
+    
+    <div>
+        <input type="text" data-ng-model="author" />
+        <button data-ng-click="getByAuthor()">Get By Author</button>
+    </div>
 
     <table>
+        <button data-ng-click="toggle_edit()">Edit</button>
         <thead>
             <th>ID</th>
             <th>Title</th>
@@ -35,7 +43,37 @@
             <th>ISBN</th>
         </thead>
 
-        <tbody id="libraryTable"></tbody>
+        <tbody  id="libraryTable" ng-repeat="record in records">
+            <tr ng-if="editId == record._id">
+                <td>{{record._id}}</td>
+                <td><input type="text" data-ng-model="newBookTitle" /></td>
+                <td><input type="text" data-ng-model="newAuthor" /></td>
+                <td><input type="text" data-ng-model="newPublisher" /></td>
+                <td><input type="text" data-ng-model="newYearPublished" /></td>
+                <td><input type="text" data-ng-model="newIsbn" /></td>
+                <td>
+                    <button data-ng-click="update_record()">Update</button>
+                    <button data-ng-click="delete_record(record._id)" class='delete_button' data-id="{{record._id}}">
+                        delete pls :)
+                    </button>
+                </td>
+            </tr>
+            
+            <tr ng-if="editId != record._id">
+                <td>{{record._id}}</td>
+                <td>{{record.bookTitle}}</td>
+                <td>{{record.author}}</td>
+                <td>{{record.publisher}}</td>
+                <td>{{record.yearPublished}}</td>
+                <td>{{record.isbn}}</td>
+                <td >
+                    <button data-ng-click=toggle_edit(record)>edit</button>
+                    <button data-ng-click="delete_record(record._id)" class='delete_button' data-id="{{record._id}}">
+                        delete pls :)
+                    </button>
+                </td>
+            </tr>
+        </tbody>
 
     </table>
 
