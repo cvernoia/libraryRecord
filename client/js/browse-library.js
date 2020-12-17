@@ -4,11 +4,11 @@ let app = angular.module("browseRecordsApp", []);
 
 app.controller("browseRecordsController", function ($scope, $http) {
     $scope.records = []
-    $scope.editId = null
-    $scope.newBookTitle = ''
-    $scope.newAuthor = ''
-    $scope.newPublisher = ''
-    $scope.newYearPublished = ''
+    $scope.editId = null,
+    $scope.newBookTitle = '',
+    $scope.newAuthor = '',
+    $scope.newPublisher = '',
+    $scope.newYearPublished = '',
     $scope.newIsbn = ''
     
     $scope.read_records = function() {
@@ -62,12 +62,12 @@ app.controller("browseRecordsController", function ($scope, $http) {
     }
     
     $scope.toggle_edit = function (record) {
-        $scope.editId = record._id
-        $scope.newBookTitle = record.bookTitle
-        $scope.newAuthor = record.author
-        $scope.newPublisher = record.publisher
-        $scope.newYearPublished = record.yearPublished
-        $scope.newIsbn = record.isbn
+        $scope.editId = record._id;
+        $scope.newBookTitle = record.bookTitle;
+        $scope.newAuthor = record.author;
+        $scope.newPublisher = record.publisher;
+        $scope.newYearPublished = record.yearPublished;
+        $scope.newIsbn = record.isbn;
     }
     $scope.read_records();
     
