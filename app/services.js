@@ -80,8 +80,8 @@ var services = function (app) {
     });
    
     app.delete('/delete-record', function(req, res) {
-       var deleteID = req.body.deleteID;
-       console.log(req.body)
+       var deleteID = req.query.deleteID;
+       console.log(req.query);
        
        MongoClient.connect(dbURL, {useUnifiedTopology: true}, function(err, client) { 
            if(err) {
@@ -107,13 +107,13 @@ var services = function (app) {
     });
     
     app.put('/update-record', function (req, res) {
-        var deleteID = req.body.deleteID;
+        var deleteID = req.query.deleteID;
         let updateParams = {};
-        if (req.body.bookTitle) updateParams.bookTitle = req.body.bookTitle;
-        if (req.body.author) updateParams.author = req.body.author;
-        if (req.body.publisher) updateParams.publisher = req.body.publisher;
-        if (req.body.yearPublished) updateParams.yearPublished = req.body.yearPublished;
-        if (req.body.isbn) updateParams.isbn = req.body.isbn;
+        if (req.query.bookTitle) updateParams.bookTitle = req.body.bookTitle;
+        if (req.query.author) updateParams.author = req.body.author;
+        if (req.query.publisher) updateParams.publisher = req.body.publisher;
+        if (req.query.yearPublished) updateParams.yearPublished = req.body.yearPublished;
+        if (req.query.isbn) updateParams.isbn = req.body.isbn;
 
 
         console.log(req.body)

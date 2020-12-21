@@ -44,7 +44,7 @@
         </thead>
 
         <tbody  id="libraryTable" ng-repeat="record in records">
-            <tr ng-if="editId == record._id">
+            <tr data-ng-if="editId == record._id">
                 <td>{{record._id}}</td>
                 <td><input type="text" data-ng-model="newBookTitle" /></td>
                 <td><input type="text" data-ng-model="newAuthor" /></td>
@@ -53,8 +53,8 @@
                 <td><input type="text" data-ng-model="newIsbn" /></td>
                 <td>
                     <button data-ng-click="update_record()">Update</button>
-                    <button data-ng-click="delete_record(record._id)" class='delete_button' data-id="{{record._id}}">
-                        delete pls :)
+                    <button data-ng-click="delete_record(record._id)" class='delete_button' params="{{record._id}}">
+                        Please Delete Entry
                     </button>
                 </td>
             </tr>
@@ -68,8 +68,8 @@
                 <td>{{record.isbn}}</td>
                 <td >
                     <button data-ng-click=toggle_edit(record)>edit</button>
-                    <button data-ng-click="delete_record(record._id)" class='delete_button' data-id="{{record._id}}">
-                        delete pls :)
+                    <button data-ng-click="delete_record(record._id)" class='delete_button' params="{{record._id}}">
+                        Please Delete Entry
                     </button>
                 </td>
             </tr>

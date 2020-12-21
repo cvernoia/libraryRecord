@@ -38,9 +38,11 @@ app.controller("browseRecordsController", function ($scope, $http) {
             params: {"author": $scope.author}
         }).then(function(res) {
             $scope.records = res.data;
-        })
+        }), function(err){
+            $scope.records = null;
+        }
+        
     }
-    
     $scope.update_record = function () {
         
         $http({
@@ -71,5 +73,4 @@ app.controller("browseRecordsController", function ($scope, $http) {
     }
     $scope.read_records();
     
-    $scope.read_records();
 });
