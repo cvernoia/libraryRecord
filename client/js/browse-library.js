@@ -25,7 +25,7 @@ app.controller("browseRecordsController", function ($scope, $http) {
         $http({
             method: "delete",
             url: libraryURL +  "/delete-record",
-            data: {"deleteID": deleteID}
+            params: {"deleteID": deleteID}
         }).then(function (res) {
             $scope.read_records(); 
         })
@@ -39,7 +39,7 @@ app.controller("browseRecordsController", function ($scope, $http) {
         }).then(function(res) {
             $scope.records = res.data;
         }), function(err){
-            $scope.records = null;
+            $scope.records = nu
         }
         
     }
